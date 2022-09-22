@@ -59,20 +59,20 @@ Other side
 
 | Pin | Code       | Type     | Details                              | Voltage | to Baseboard | Misc         | MCU pin. |
 |-----|------------|----------|--------------------------------------|---------|--------------|--------------|----------|
-| 50  | LVCLK+     | LVDS     | LVDS CLK+                            |         | P1.80        |          |
-| 49  | LVCLK-     | LVDS     | LVDS CLK-                            |         | P1.82        |          |
+| 50  | reserved   | LVDS     | LVDS CLK+                            |         | P1.80        |          |
+| 49  | reserved   | LVDS     | LVDS CLK-                            |         | P1.82        |          |
 | 48  | VSOM       | Power    | Main power for board 3.45V - 4.5V    |         | VSOM         |          |
-| 47  | LVD0+      | LVDS     | LVDS D0+                             |         | P1.42        |          |
-| 46  | LVD0-      | LVDS     | LVDS D0-                             |         | P1.44        |          |
+| 47  | reserved   | LVDS     | LVDS D0+                             |         | P1.42        |          |
+| 46  | reserved   | LVDS     | LVDS D0-                             |         | P1.44        |          |
 | 45  | VSOM       | Power    | Main power for board 3.45V - 4.5V    |         | VSOM         |          |
-| 44  | LVD1+      | LVDS     | LVDS D1+                             |         | P1.46        |          |
-| 43  | LVD1-      | LVDS     | LVDS D1-                             |         | P1.48        |          |
+| 44  | reserved   | LVDS     | LVDS D1+                             |         | P1.46        |          |
+| 43  | reserved   | LVDS     | LVDS D1-                             |         | P1.48        |          |
 | 42  | VSOM       | Power    | Main power for board 3.45V - 4.5V    |         | VSOM         |          |
-| 41  | LVD2+      | LVDS     | LVDS D2+                             |         | P1.50        |          |
-| 40  | LVD2-      | LVDS     | LVDS D2-                             |         | P1.52        |          |
+| 41  | reserved   | LVDS     | LVDS D2+                             |         | P1.50        |          |
+| 40  | reserved   | LVDS     | LVDS D2-                             |         | P1.52        |          |
 | 39  | VSOM       | Power    | Main power for board 3.45V - 4.5V    |         | VSOM         |          |
-| 38  | LVD3+      | LVDS     | LVDS D3+                             |         | P1.56        |          |
-| 37  | LVD3-      | LVDS     | LVDS D3-                             |         | P1.58        |          |
+| 38  | reserved   | LVDS     | LVDS D3+                             |         | P1.56        |          |
+| 37  | reserved   | LVDS     | LVDS D3-                             |         | P1.58        |          |
 | 36  | VSOM       | Power    | Main power for board 3.45V - 4.5V    |         | VSOM         |          |
 | 35  |            |          |                                      |         |              |          |
 | 34  |            |          |                                      |         |              |          |
