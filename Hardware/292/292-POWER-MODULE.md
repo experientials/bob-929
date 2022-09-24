@@ -15,7 +15,7 @@ The Power Module has specific power and data functions
 
 The Power Module exposes two vertical USB-C sockets and connects to the carrier/face board through two 50 pin B2B connectors.
 A 45 pin connector is used to experiment with Alt. Mode over the Host USB connector.
-The signal voltage on the board is 3.3V.
+The signal voltage on the board is 3.3V. The board can be laid out as 4 layer or 6 layer as needed.
 
 ![Bob 292 T-USB Board](./292-T-USB.png)
 
@@ -27,16 +27,14 @@ The signal voltage on the board is 3.3V.
 - 1 * [TPS65988](https://www.ti.com/product/TPS65988?keyMatch=TPS65988&tisearch=search-everything&usecase=GPN) Dual Port USB Type-C® and USB PD Controller, Power Switch, and High-Speed Multiplexer. [Mouser](https://www.mouser.ch/ProductDetail/Texas-Instruments/TPS65988DJRSHR?qs=sGAEpiMZZMv0NwlthflBiyrCPYKWtEb9w8lmLVKGFHI%3D)
 - 1 * [W25X40CLSNIG NOR-Flash spiFlash, 4M-bit, 4Kb Uniform Sector]() - [Mouser](https://www.mouser.ch/ProductDetail/Winbond/W25X40CLSNIG) - In stock
 - 1 * [BQ24250RGER battery charger](https://www.ti.com/product/BQ24250)  [$2 JLCPCB (4x4 mm package)](https://jlcpcb.com/parts/componentSearch?isSearch=true&searchTxt=BQ24250) [Mouser](https://www.mouser.ch/ProductDetail/Texas-Instruments/BQ24250RGER?qs=VqERlb%252BKohfBI76g9iGg8g%3D%3D)
-- 2 * [3 pin JST SH socket SM03B-SRSS-TB](https://www.jst-mfg.com/product/detail_e.php?series=231) - [JLCPCB](https://jlcpcb.com/parts/componentSearch?isSearch=true&searchTxt=SM03B-SRSS-TB) - [Farnell](https://ch.farnell.com/jst-japan-solderless-terminals/sm03b-srss-tb-lf-sn/stecker-90-3kont/dp/1679118?CMP=GRHB-SF-OEM) (Matched by JST PHR-3)
+- 1 * [3 pin JST SH socket SM03B-SRSS-TB](https://www.jst-mfg.com/product/detail_e.php?series=231) - [JLCPCB](https://jlcpcb.com/parts/componentSearch?isSearch=true&searchTxt=SM03B-SRSS-TB) - [Farnell](https://ch.farnell.com/jst-japan-solderless-terminals/sm03b-srss-tb-lf-sn/stecker-90-3kont/dp/1679118?CMP=GRHB-SF-OEM) (Matched by JST PHR-3)
+- 1 * [3 pin JST ACH socket BM03B](https://www.jst.com/products/crimp-style-connectors-wire-to-board-type/ach-connector/)
 - 2 * [TE Connectivity 45PIN 0.3MM 571-4-2328724-5 FPC 3-2328724-5](https://www.te.com/usa-en/product-4-2328724-5.html) $0.41
 - 2 * [TPD6S300ARUKR ESD protection for USB-C port](https://www.ti.com/product/TPD6S300A/part-details/TPD6S300ARUKR)
 HD3SS3220IRNHT) WQFN (RNH) | 30 pin 250 tray [Mouser](https://www.mouser.ch/ProductDetail/Texas-Instruments/HD3SS3220IRNHR?qs=sGAEpiMZZMsyYdr3R27aV4Thfeh8oIeSp2btOUhwC5A%3D)
 - 2 * [TUSB546 Alt. Mode switch](https://www.ti.com/product/TUSB546-DCI)
-- Smaller JST connector for buttons
-
-Future Components
-
 - 2 * [TS5USBC410 Dual 2:1 USB 2.0 Mux/DeMux Switch](../datasheets/USB/ts5usbc41.pdf). [Mouser](https://www.mouser.ch/ProductDetail/Texas-Instruments/TS5USBC410IYFFR?qs=sGAEpiMZZMutXGli8Ay4kPB6XEQFysSpdNErqZgdEYs%3D)
+- Smaller JST connector for buttons to avoid plugging battery in wrong.
 
 
 ### Board
@@ -45,11 +43,34 @@ Future Components
 
 The two 50 pin connectors are placed with a gap of 16 mm between their midpoint.
 These two connectors are vertically centered on the center of the vertical USB-C connector.
+The placement of these 4 connectors in the PCB design must not be changed as other designs depend on them.
+If needed they can be rotated 180deg, but it will result in several design documents needing revision.
 
 Components on the underside can be max 1.2mm thick. 
 The expected DF40 socket the board inserts into creates 1.5mm clearing height. 
 
 A half hole(like M.2 modules) should be added at the end of the board between the two 3 pin connectors.
+
+
+### Outstanding work
+
+- Wire TSP65988 I2C address
+- Voltage regulators
+- Half hole between connectors
+- BQ24250 inductor and resistor choices
+- BQ24250 LED with modest light level
+- Temp. sensor spec requirements added in this document
+- Review connector selection (should be different to avoid insert mistakes)
+- Verify PD Controller doesn't need external power path for our requirements
+- Check CC/BC 1.2 routing
+- Check HDMI HPD signal routing
+- Ensure there is sufficient ESD components
+- Reference diagrams have been pasted as images to help revision
+- Ensuring components used are in general stock
+- Component placement
+- Routing
+- Updating GitHub KiCAD lib with any changes to symbols/footprints/3dshapes
+
 
 ### I2C Bus
 
@@ -64,6 +85,8 @@ Chips on the Power I2C bus
 
 The TPS PD Controller can be accessed and master various I2C busses. I2C1 connects to STEM.
 I2C2 is a slave on SYS. I2C3 is on POWER so it can master the other chips.
+The PD Controller firmware can be patched over I2C or the flash can be written to directly via the 50 pin connector while the board 
+is otherwise not powered or the PD Ctrl is kept in a shut down state.
 
 By default the chipsets can be controlled by Linux Device Driver Bindings(on i.MX SoM) via the SYS I2C.
 The future direction is to control them by the local MSP430 MCU, which exposes information in the STEM I2C bus.
@@ -169,27 +192,89 @@ See [Linux Documentation](https://elixir.bootlin.com/linux/latest/source/Documen
 
 ## Power
 
+One key role of the board is to deliver power to the main board/faceboard that it slots into. It delivers VSOM to an i.MX 8 system module and 3V3 for always on chipsets such as MCP430, sensors and a stereo camera subsystem.
+When the overall system is in resting state the system module is in a suspended state, potentially with the low power core running, or VSOM may be completely switched off. The sensors and camera subsystem must hower run in order to determine when to wake up from the resting state.
+
+The connected LiPo battery would have multiple options. One would be a lightweight option such as a single NCR18650.
+Another options might be a 125054 pack with 4000mAh. A heavy duty option would be made by combining two or three balanced cells in parallel to reach 10000mAh.
+Resistors should be chosen for common temperature sensor, and the details provided as a correction to this document.
+The chosen battery pack might have to be modified to add a temperature sensor.
+
+The ability for the USB connectors to act as Power Sink and Power Source is essential so the engineering review must consider how to provide at least 1A
+sinking and sourcing by CC/PD negotiation or setting I2C registers. It is acceptable to only allow one port to sink and one port to source at a time.
+
 USB DRP means dual-role power. 
+
+
+### Provided Power
+
+VSOM is 3.45V to 4.4V regardless of USB VBUS supply supported. VSOM is primarily used to power an UCM-iMX8M-Plus module.
+In the initial design VSOM is always supported directly from the LiPo BQ module. In the future a FET may be added to allow switching
+off VSOM while still supplying other voltage lines.
+
+5V supplies a minimal current(perhaps 100mA) to support signalling LED and LED matrix chip along with an HDMI socket used for development.
+Logic will be added eventually to switch the delivery of 5V on/off.
+
+3V3 supplies a limited current(up to 250mA) to support sensors and the camera subsystem connected to the main/faceboard which must 
+be able to run even when the overall system is resting. The only case for switching off this supply is in a very low battery situation.
+
+PWR_CHARGE and BAT_LDO is provided over the 50 pin connectors to allow board functionality verification and will not be used
+under normal operating conditions.
+
 
 ### Internal Power
 
-LDO_3V3(PD) provides up to 25mA to drive the SPI flash and other essential circuits:
+TPS65988 LDO_3V3(PD) provides up to 25mA to drive the SPI flash and other essential circuits:
 LIVE_3V3 is downregulated from LiPo BQ SYS
 
 LDO_3V3 budget:
 
 - Flash 15mA
 
-LIVE_3V3
+LIVE_3V3 budget:
  
-- TUSB456 250mA
+- TUSB456 2 * 250mA
+- Exposed power on 50 pin PD Ctrl connector 500mA
 
+LIVE_5V budget:
 
-LDO(LiPo) provides up to 50mA, 4.9V for temp/LED
+- HDMI 50mA
+- LED matrix 200mA (10 fully lit LEDs at a time)
 
+BQ25240 LDO(LiPo) provides up to 50mA, 4.9V for temp/LED.
 
 VCONN on PPx_CABLE input is needed to support alternate mode negotiation over CC pins.
 
+
+### PD Control signals
+
+Apparently the communication over CC pins is the new way. The previous BC 1.2 approach requires communication over USB 2.0 pins.
+The PD Controller supports both. BC 1.2 is supported by connecting it to OTG and Host D+/D- lines along with the connection to the 50 pin connector.
+
+- [Can you do type-C USB DRP, UFP data, sourcing device with CC controller only?](https://electronics.stackexchange.com/questions/604629/can-you-do-type-c-usb-drp-ufp-data-sourcing-device-with-cc-controller-only)
+
+
+## USB 2.0/3.0 data
+
+The default connection of USB signals is that:
+
+- USB1 3.0 goes from the High-Speed 50 pin connector to the OTG Type-C connector.
+- USB2 3.0 goes from the High-Speed 50 pin connector to the Host Type-C connector.
+- USB1 2.0 goes from the PD Ctrl 50 pin connector to the OTG Type-C connector.
+- USB2 2.0 goes from the PD Ctrl 50 pin connector to the Host Type-C connector.
+- BC 1.2 signals are combined with the USB1 and USB2 2.0 signals and passed to the Type-C connectors.
+
+
+## Alt. Mode signals
+
+Alternate Data flows are controlled by the PD Controller or an External Controller via the PD Ctrl 50 pin connector.
+
+- Alternate signals route from the 45 pin connector over the TUSBC546 chipset and then Host Type-C connector
+- Alternate high speed signals are not currently supported for the OTG connector
+- Type-C Alt. Mode is managed over Power I2C
+- A second USB 2.0 signal can be routed from the PD Ctrl 50 pin connector over the B side of the Type-C connectors
+
+Type-C Alt. Mode is meant to be implemented using addidtional chipsets connected via the 45 pin connector
 
 Consider msg trail [eDP over Type-C: CM4](https://forums.raspberrypi.com/viewtopic.php?t=332186)
 

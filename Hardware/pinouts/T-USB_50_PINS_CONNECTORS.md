@@ -47,11 +47,11 @@ One side
 | 18  | STEM SDA         | I2C      | STEM SDA                             |         | P1.96        | GP20 I2C0   |
 | 19  | STEM INT         | I2C      | Sensor interrupts                    |         | P1.98        |          |
 | 20  | GND              | Power    | Ground                               |         |              |          |
-| 21  | T_SBWTCK         | MSP430   | SBWTCK / TEST / RTS                  |         |              |          |
-| 22  | T_EXTRA          | MSP430   |                                      |         |              |             | 
-| 23  | T_SBWTDIO        | MSP430   | SBWTDIO / RST / NMI / DTR            |         |              |          |
-| 24  | PWR_CHARGE       | Battery  | Internal charge current for testing  |         |              |          |
-| 25  | BAT_STAT         | Battery  | Internal charging status for testing |         |              |          |
+| 21  |                  |          |                                      |         |              |          |
+| 22  |                  |          |                                      |         |              |             | 
+| 23  |                  |          |                                      |         |              |          |
+| 24  |                  |          |                                      |         |              |          |
+| 25  |                  |          |                                      |         |              |          |
 
 
 
@@ -79,10 +79,10 @@ Other side
 | 33  | GND        | Power    | Ground                               |         |              |          |
 | 32  | CAN_RX     |          | CAN1_RX                              |         | P1.51        | P21.12       |
 | 31  | CAN_TX     |          | CAN1_TX                              |         | P1.53        | P21.14       |          |
-| 30  | BAT_LDO    | Battery  | 4.9V 50mA LDO for STAT LED           |         |              |              |
-| 29  | BOTH_VSOM2 | MSP430   | High if any VSOM pin on this connector supplies on Faceboard side. |         |              |          |
-| 28  | UART_T_TXD | MSP430   |                                      |         |              |          |
-| 27  | UART_T_RXD | MSP430   |                                      |         |              |          |
+| 30  | PWR_CHARGE |          |                                      |         |              |              |
+| 29  |            |          |                                      |         |              |          |
+| 28  |            |          |                                      |         |              |          |
+| 27  |            |          |                                      |         |              |          |
 | 26  | VSOM       | Power    | Main power for board 3.45V - 4.5V    |         | VSOM         |          |
 
 Could also take in HDMI or PCIe lanes instead of LVDS
@@ -105,55 +105,52 @@ One side
 | 6   | USB2_DP      | USB      | USB2 D+                              |         | P1.3         |
 | 7   | USB2_DN      | USB      | USB2 D-                              |         | P1.5         |
 | 8   | GND          | Power    | Ground                               |         |              |
-| 9   | PD_SWD_CLK   | Debug    | PD Controller GPIO12                 |         |              |
-| 10  | PD_SWD_DAT   | Debug    | PD Controller GPIO13                 |         |              |
-| 11  | BOTH_VSOM    | Enable   | Bridge board signal;VSOM connected on both sides | 3V3        |   |
-| 12  | MCU_SYS_INT  | IRQ      | When state of MCUs change -> SoM     |         | P20.20 P2.67 EX:P1.3 EX0.2 |             |
+| 9   | USB1_SBU1    | OTG      | Spare pins                           |         |              |
+| 10  | USB1_SBU2    | OTG      | Spare pins                           |         |              |
+| 11  | GND          | Power    | Ground                               | 3V3        |   |
+| 12  |SYS_PD_CTL_INT| IRQ      | PD Controller triggers INT as SYS slave |         | P20.20 P2.67 EX:P1.3 EX0.2 |             |
 | 13  | SYS I2C SCL  | I2C      |                                      |         | P21.7        | GP15 I2C1.  |
 | 14  | SYS I2C SDA  | I2C      |                                      |         | P21.5        | GP14 I2C1.  |
-| 15  | VSOM_LOCK    | Power    | Main power for board 3.45V - 4.5V, if mechanical lock shorted    |         | VSOM | Mech. lock |
-| 16  | SYS_RST_PMIC | Reset    | PMIC reset input pin. Internally pulled up with LDO1 power rail. Once low, PMIC performs reset. |         | P1.2   | P10.9   |
-| 17  | POR_B_3P3    | Reset    | Power On reset output pin. Open drain output requiring external pull up resistor. |    | P2.66   | P10.7 |
+| 15  | VSOM         | Power    | Main power for board 3.45V - 4.5V, if mechanical lock shorted    |         | VSOM | Mech. lock |
+| 16  | USB_XD_OE    | Alt USB2 | USB 2.0 bus switch                   |         | P1.2   | P10.9   |
+| 17  | USB_XD_SEL   | Alt USB2 | USB 2.0 bus switch                   |    | P2.66   | P10.7 |
 | 18  | PMIC_ON_REQ  | Reset    | PMIC ON input from Application processor. When high, the device starts power on sequence. |   | P1.68   | P10.5   |
 | 19  | PMIC_STBY_REQ| Reset    | Standby mode input from Application processor. When high, device enters STANDBY mode. |   | P1.66    | P10.3  |
-| 20  | VCC_RTC      | Power    | Low power mode supply                |         | P1.93         |           |
+| 20  | ALT_BOOT     | Boot     | Alternate boot                       |         | P1.90         |           |
 | 21  | PWRBTN       | Boot     | Power button trigger                 |         | P2.64         |           |
-| 22  | ALT_BOOT     | Boot     | Alternate boot                       |         | P1.90         |           |
-| 23  | QSPI_BOOT_EN_3P3| Boot  | SPI boot                             |         | P1.95         |  P21.18   |
+| 22  | BAT_STAT     | Charge   | Charging state                       |         | P1.90         |           |
+| 23  | BAT_INT      | Charge   | Charging interrupt                   |         | P1.95         |  P21.18   |
 | 24  | BAT_CE#      | Charger  | Charge Enable Active-Low. Connect CE to a high logic level to place the battery charger in standby mode.  |      |    |
-| 25  | PD_VIN_EN    | Future   | Enable VIN_5V/3V3 from PWR_SYS (TBD) |         |    |
+| 25  | BAT_EN       | Charger  | Enable battery charger output        |         |    |
 
 Other side
 
 | Pin | Code       | Type     | Details                              | Voltage    | to Baseboard |  Misc   | mcu pin |
 |-----|------------|----------|--------------------------------------|------------|--------------|---------|---------|
-| 50  | PD_HRESET  | Future   | PD Controller HRESET (High)          |            |              |         |
-| 49  | GND        | Power    | Ground                               |            |              |         |
-| 48  | UART1_TXD  | UART     |  UART1 Tx                            |            | P1.72        | P20.9   | GP4 UART1    |
-| 47  | UART1_RXD  | UART     | UART1 Rx                             |            | P1.19        | P20.11  | GP5 UART1    |
-| 46  | UART2_TXD  | UART     | UART2 Tx                             |            | P1.74        | P20.1   | GP8 UART1.   |
-| 45  | UART2_RXD  | UART     | UART2 Rx                             |            | P1.76        | P20.3   | GP9 UART1    |
-| 44  | UART3_TXD  | UART     | UART3 Tx                             |            | P1.61        | P20.2   | GP12 UART0   |
-| 43  | UART3_RXD  | UART     | UART3 Rx                             |            | P1.21        | P20.4   | GP13 UART0   |
-| 42  | UART4_TXD  | UART     | UART4 Tx                             |            | P1.86        | P20.8   | GP20 UART1 |
-| 41  | UART4_RXD  | UART     | UART4 Rx                             |            | P1.84        | P20.10  | GP21 UART1 |
-| 40  | MIC_CLK    | Sensor   | frontboard mic                       |            |              |    |
-| 39  | MIC_DATA   | Sensor   |                                      |            |              |    |
-| 38  | PD_USBC_INT| PD ctl   | USB insertion state etc changed      |            |              |    |
-| 37  | MOTION_INT | Sensor   | Spare interrupt pin for future       |            |              |    |
-| 36  | NIGHT SCL  | I2C      | I2C6 SCL                             |            | P1.87        | P21.2   | GP19 I2C1.   |
-| 35  | NIGHT SDA  | I2C      | I2C6 SDA                             |            | P1.89        | P21.4   | GP18 I2C1.   |
-| 34  | NIGHT INT  | I2C      | Sensor interrupts                    |            |              |         |          |
-| 33  | SPI_CS     | RP2040   | RP SPI                               | 3.3V       |              |         | GP29 SPI1 |
-| 32  | SPI_CLK    | RP2040   | RP SPI                               | 3.3V       |              |         | GP10 SPI |
-| 31  | SPI_MISO   | RP2040   | RP SPI                               | 3.3V       |              |         | GP28 SPI |
-| 30  | SPI_MOSI   | RP2040   | RP SPI                               | 3.3V       |              |         | GP11 SPI |
-| 29  | VIN_3V3    |          | Supply for TPS64988 circuitry and I/O| 3.3V 50 mA |              |         |    |
-| 28  | VIN_5V     | Power    | System 5V src (PPHV1/2, PP1/2_CABLE) | 5V 500 mA  |              |         |     |
-| 27  | VIN_5V     | Power    | System 5V src (PPHV1/2, PP1/2_CABLE) | 5V 500 mA  |              |         |     |
+| 50  |
+| 49  | VCC_RTC    | Power    | Low power mode supply                |         | P1.93         |           |
+| 48  | USB1_XDP   | USB 2.0  |  OTG plug alt USB 2.0                |            |              | 
+| 47  | USB1_XDN   | USB 2.0  | OTG plug alt USB 2.0                 |            |          |  
+| 46  | 5V         | Power    | To drive LED matrix and HDMI         |            |          |  
+| 45  | USB2_XDP   | USB 2.0  | Host plug alt USB 2.0                |            |          |  
+| 44  | USB2_XDN   | USB 2.0  | Host plug alt USB 2.0                |            |          |  
+| 43  | 3V3        | Low power| From battery (low power mode)        | 3.3V       |          |  
+| 42  |         |        |                            |            |          |  
+| 41  |    |       |                           |            |          |  
+| 40  | 3V3        | Low power| From battery (low power mode)        | 3.3V       |              |    |
+| 39  | PD_HRESET  | PD       | PD Controller HRESET (High)          |            |              |         |
+| 38  |            | I2C      |           |            |              |    |
+| 37  | POWER_PD_CTL_INT| I2C | Interrupt from slaves                |            |              |    |
+| 36  | POWER SCL  | I2C      | Power SCL                             |            |         |     |     |
+| 35  | POWER SDA  | I2C      | Power SDA                             |            |         |     |     |
+| 34  | FLASH_HOLD | I2C      | Override the built in flash chip     |            |              |         |          |
+| 33  | SPI_CS     | PD       | Flash SPI                               | 3.3V       |              |         |   |
+| 32  | SPI_CLK    | PD       | Flash SPI                               | 3.3V       |              |         |   |
+| 31  | SPI_MISO   | PD       | Flash SPI                               | 3.3V       |              |         |   |
+| 30  | SPI_MOSI   | PD       | Flash SPI                               | 3.3V       |              |         |   |
+| 29  | BAT_LDO    | Power    | Charger LDO for status               | 3.3V 50 mA |              |         |    |
+| 28  | LOCK_BTN   | Power    | Signal                               |            |              |         |     |
+| 27  | SHUTDOWN_BTN| Power   | Signal                               |            |              |         |     |
 | 26  | VSOM       | Power    | Main power for board 3.45V - 4.5V    |            | VSOM         |  Conn. detect |     |
 
-SPI pins will be exchanged for SDIO (MIC_INT / MOTION_INT / PD_HRESET likely to go away)
 
-Consider SPI for PD Controller
-PD Controller IRQ I2C1
