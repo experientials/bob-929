@@ -15,7 +15,8 @@ The board
 ## BOM
 
 - 1 * [XTAL OSC 24MHz ASE-24.000MHZ-LC-T]() - [Mouser](https://www.mouser.ch/ProductDetail/ABRACON/ASE-24.000MHZ-LC-T) - 1.2mm height - [Datasheet](https://abracon.com/Oscillators/ASEseries.pdf) - In stock
-- 1 * [LDO Voltage Reg TPS79628DCQ 2.8V as SOT-223-6]() - [Mouser](https://www.mouser.ch/ProductDetail/Texas-Instruments/TPS79628DCQ) - In stock
+- 1 * [TPS79628DRBT voltage regulator 2.8V](https://www.ti.com/product/TPS796/part-details/TPS79628DRBT) - In stock
+- 1 * [TXS0104EPWR 4 bit voltage shifter](https://www.ti.com/product/TXS0104E/part-details/TXS0104EPWR)
 - 1 * [IO Expander TCA9534PWR TSSOP 16 pin](https://www.ti.com/product/TCA9534) - 1.2mm height - [Datasheet](https://www.ti.com/lit/ds/symlink/tca9534.pdf) - In stock
 - 1 * [Hirose Micro SD Card slot DM3CS-SF]() - [Mouser](https://www.mouser.ch/ProductDetail/Hirose-Connector/DM3CS-SF) - In stock
 - 1 * [Ti Low Power MSP430 MCU MSP430FR2422IRHLR](https://www.ti.com/product/MSP430FR2422/part-details/MSP430FR2422IRHLR) - 15 GPIO - In stock
