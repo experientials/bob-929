@@ -6,6 +6,16 @@
 
 :[UCM Design Guidelines](../refs/Compulab/DESIGN_GUIDELINES.md)
 
+## Programming the Board
+
+How to wire up the board without a SoM.
+
+SWB pins
+UARTs
+I2C for SYS/STEM
+
+Over USB?
+
 
 ## Notes
 
