@@ -2962,6 +2962,7 @@
     (uuid fae0cb1d-7e80-4012-b028-444c6e590694)
   )
 
+  (no_connect (at 29.845 223.52) (uuid 0f222a18-f5d3-4f88-9292-6d629cbe6796))
   (no_connect (at 105.41 45.72) (uuid 1f0c08ea-daff-4f2c-b526-5e3100f65182))
   (no_connect (at 105.41 48.26) (uuid 1f0c08ea-daff-4f2c-b526-5e3100f65183))
   (no_connect (at 218.44 105.41) (uuid 4fb0cdde-b8a4-403a-8fde-7504182f8cb9))
