@@ -5,7 +5,7 @@
       "Application": "Pcbnew",
       "Version": "(6.0.7)"
     },
-    "CreationDate": "2022-09-26T14:07:28+03:00"
+    "CreationDate": "2022-10-05T10:23:08+03:00"
   },
   "GeneralSpecs": {
     "ProjectId": {
@@ -41,64 +41,9 @@
   ],
   "FilesAttributes": [
     {
-      "Path": "202-combi-v0.2-F_Cu.gbr",
-      "FileFunction": "Copper,L1,Top",
+      "Path": "202-combi-v0.2-Edge_Cuts.gbr",
+      "FileFunction": "Profile",
       "FilePolarity": "Positive"
-    },
-    {
-      "Path": "202-combi-v0.2-In1_Cu.gbr",
-      "FileFunction": "Copper,L2,Inr",
-      "FilePolarity": "Positive"
-    },
-    {
-      "Path": "202-combi-v0.2-In2_Cu.gbr",
-      "FileFunction": "Copper,L3,Inr",
-      "FilePolarity": "Positive"
-    },
-    {
-      "Path": "202-combi-v0.2-In3_Cu.gbr",
-      "FileFunction": "Copper,L4,Inr",
-      "FilePolarity": "Positive"
-    },
-    {
-      "Path": "202-combi-v0.2-In4_Cu.gbr",
-      "FileFunction": "Copper,L5,Inr",
-      "FilePolarity": "Positive"
-    },
-    {
-      "Path": "202-combi-v0.2-B_Cu.gbr",
-      "FileFunction": "Copper,L6,Bot",
-      "FilePolarity": "Positive"
-    },
-    {
-      "Path": "202-combi-v0.2-F_Paste.gbr",
-      "FileFunction": "SolderPaste,Top",
-      "FilePolarity": "Positive"
-    },
-    {
-      "Path": "202-combi-v0.2-B_Paste.gbr",
-      "FileFunction": "SolderPaste,Bot",
-      "FilePolarity": "Positive"
-    },
-    {
-      "Path": "202-combi-v0.2-F_Silkscreen.gbr",
-      "FileFunction": "Legend,Top",
-      "FilePolarity": "Positive"
-    },
-    {
-      "Path": "202-combi-v0.2-B_Silkscreen.gbr",
-      "FileFunction": "Legend,Bot",
-      "FilePolarity": "Positive"
-    },
-    {
-      "Path": "202-combi-v0.2-F_Mask.gbr",
-      "FileFunction": "SolderMask,Top",
-      "FilePolarity": "Negative"
-    },
-    {
-      "Path": "202-combi-v0.2-B_Mask.gbr",
-      "FileFunction": "SolderMask,Bot",
-      "FilePolarity": "Negative"
     }
   ],
   "MaterialStackup": [
