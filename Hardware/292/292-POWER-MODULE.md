@@ -1,15 +1,16 @@
 # 292 Power Module
 
-The power module provides VSOM power to the Faceboard and routes data signals from the Faceboard through two USB plugs. A set of plugs are front facing and another set is back facing. Only one set can be used at a time.
+The power module provides VSOM power to the Faceboard and routes data signals from the Faceboard through two USB plugs. 
+A set of plugs are front facing and another set is back facing. Only one set can be used at a time.
 
 The Power Module has specific power and data functions
-- Supply the system with VSOM power
+- Supply the system with VSOM power(LiPo voltage range)
 - Receive(sink role) power from OTG USB-C connector or a LiPo battery
 - No need receiving(sink role) of power from Host USB-C for now
-- Deliver max. 900mA to devices on Host USB
+- Deliver max. 900mA to devices on Host USB, typically 200mA
 - No power delivery(source role) on OTG USB
 - Charge the connected LiPo battery
-- Provide Alt. Mode support on Host USB port
+- Provide Alt. Mode support on Host USB port while powered
 - Provide data signals from the Faceboard in the system over two USB-C connectors
 - Manage autonomous system functions and waking state in collaboration with MSP430 MCU on faceboard
 
@@ -72,6 +73,25 @@ A half hole(like M.2 modules) should be added at the end of the board between th
 - Updating GitHub KiCAD lib with any changes to symbols/footprints/3dshapes
 
 
+Review
+
+- More ground pins on connectors. VSOM pins should have the same effect as ground pins for isolating high speed signals.
+- I2C SOM pull up resistors: I would add the pull up resistors on the base board where the SOM is placed.
+- BAT_STAT/STAT on 50 pin connectors are mainly for test setups, but yes any LED on the base board must be carefully designed.
+- Could VCC_RTC be driven directly off the LiPo and downregulated to 3V3. VCC_RTC is intended for the SOM. It must be 1.5V - 3.0 V. At 3V3 it could be used to drive low power MCUs for system supervision during deep sleep.
+- IN operating voltage. I imagine limiting voltage in TPS65988 firmware.
+- TUSB456 is spec'd to consume 335mW for USB communication. USB would mostly be 
+- PP_CABLE: see the requirements for Sink/Source. Can external paths be reduced from the reference schema? Assuming a different config is uploaded to TPS65988
+- What is OTG 2.0 fault for? Signals can be connected to TSP65988. One line is already connected to GPIO3, another could be to GPIO0. The two USB connectors have dedicated roles of acting as a device and a host. Is it only relevant for one of them?
+- Connecting the two D+ and D- pins together is meant to be done with a USB 2.0 switch to allow passing two lines per connector.
+
+
+Refs
+
+- [i.MX8M processor pins pull-up /down configuration](https://community.nxp.com/t5/i-MX-Processors/i-MX8M-processor-pins-pull-up-down-configuration/m-p/882223)
+- [I2C Bus Pullup Resistor Calculation](https://www.ti.com/lit/an/slva689/slva689.pdf)
+
+
 ### I2C Bus
 
 The board has 3 I2C busses. SYS, Stem and Power. Key chipsets on the board are on the Power bus, which by default is bridged onto the SYS I2C, so the two must take care to not clash on addresses. 
@@ -83,13 +103,7 @@ Chips on the Power I2C bus
 - TUSB546 Alt Mode Control
 - USB 2.0 switches
 
-The TPS PD Controller can be accessed and master various I2C busses. I2C1 connects to STEM.
-I2C2 is a slave on SYS. I2C3 is on POWER so it can master the other chips.
-The PD Controller firmware can be patched over I2C or the flash can be written to directly via the 50 pin connector while the board 
-is otherwise not powered or the PD Ctrl is kept in a shut down state.
-
-By default the chipsets can be controlled by Linux Device Driver Bindings(on i.MX SoM) via the SYS I2C.
-The future direction is to control them by the local MSP430 MCU, which exposes information in the STEM I2C bus.
+:[I2C Busses](../sys/I2C-BUSSES.md)
 
 :[SYS I2C Adresses](../pinouts/SYS_I2C_ADDRESSES.md)
 

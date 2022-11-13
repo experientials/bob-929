@@ -11,23 +11,23 @@ Connector 2: PD Controller, Debug, USB 2.0
 | Power   |  Max Current | Pins |
 |---------|--------------|------|
 | VSOM    | 3.0 A        | 10   |
-| GND     | 3.0 A        | 10   |
-| VCC_RTC | 600 mA       | 2    |
-| VIN_3V3 | 300 mA       | 1    |
-| VIN_5V  | 600 mA       | 2    |
+| GND     | 3.0 A        | 12   |
+| VCC_RTC | 300 mA       | 1    |
+| 3V3     | 600 mA       | 2    |
+| 5V      | 300 mA       | 1    |
 | LDO_3V3 | 300 mA       | 1    |
 
 
 #### Connector 1 high-speed data, close to Alt Mode Breakout connectors
 
-- 6 * GND
+- 8 * GND
 - 7 * VSOM
 
 One side
 
 | Pin | Code             | Type     | Details                              | Voltage | to Baseboard | Misc         | MCU pin. |
 |-----|------------------|----------|--------------------------------------|---------|--------------|--------------|----------|
-| 1   | VSOM             | Power    | Main power for board 3.45V - 4.5V    |         | VSOM         | Conn. detect |          |
+| 1   | VSOM             | Power    | Main power for board 3.5V - 4.5V     |         | VSOM         | Conn. detect |          |
 | 2   | USB1_RX_DP       | USB      | USB1 RX D+ (OTG)                     |         | P1.6         | HD3SS460 SSRX     |
 | 3   | USB1_RX_DN       | USB      | USB1 RX D- (OTG)                     |         | P1.8         | HD3SS460 SSRX     |
 | 4   | GND              | Power    | Ground                               |         |              |          |
@@ -42,14 +42,14 @@ One side
 | 13  | GND              | Power    | Ground                               |         |              |          |
 | 14  |                  |          |                                      |         |              |             | 
 | 15  |                  |          |                                      |         |              |             | 
-| 16  |                  |          |                                      |         |              |             | 
+| 16  | GND              | Power    | Ground                               |         |              |          |
 | 17  | STEM SCL         | I2C      | STEM SCL                             |         | P1.94        | GP21 I2C0   |
 | 18  | STEM SDA         | I2C      | STEM SDA                             |         | P1.96        | GP20 I2C0   |
 | 19  | STEM INT         | I2C      | Sensor interrupts                    |         | P1.98        |          |
 | 20  | GND              | Power    | Ground                               |         |              |          |
 | 21  |                  |          |                                      |         |              |          |
 | 22  |                  |          |                                      |         |              |             | 
-| 23  |                  |          |                                      |         |              |          |
+| 23  | GND              | Power    | Ground                               |         |              |          |
 | 24  |                  |          |                                      |         |              |          |
 | 25  |                  |          |                                      |         |              |          |
 
@@ -61,19 +61,19 @@ Other side
 |-----|------------|----------|--------------------------------------|---------|--------------|--------------|----------|
 | 50  | reserved   | LVDS     | LVDS CLK+                            |         | P1.80        |          |
 | 49  | reserved   | LVDS     | LVDS CLK-                            |         | P1.82        |          |
-| 48  | VSOM       | Power    | Main power for board 3.45V - 4.5V    |         | VSOM         |          |
+| 48  | VSOM       | Power    | Main power for board 3.5V - 4.5V     |         | VSOM         |          |
 | 47  | reserved   | LVDS     | LVDS D0+                             |         | P1.42        |          |
 | 46  | reserved   | LVDS     | LVDS D0-                             |         | P1.44        |          |
-| 45  | VSOM       | Power    | Main power for board 3.45V - 4.5V    |         | VSOM         |          |
+| 45  | VSOM       | Power    | Main power for board 3.5V - 4.5V     |         | VSOM         |          |
 | 44  | reserved   | LVDS     | LVDS D1+                             |         | P1.46        |          |
 | 43  | reserved   | LVDS     | LVDS D1-                             |         | P1.48        |          |
-| 42  | VSOM       | Power    | Main power for board 3.45V - 4.5V    |         | VSOM         |          |
+| 42  | VSOM       | Power    | Main power for board 3.5V - 4.5V     |         | VSOM         |          |
 | 41  | reserved   | LVDS     | LVDS D2+                             |         | P1.50        |          |
 | 40  | reserved   | LVDS     | LVDS D2-                             |         | P1.52        |          |
-| 39  | VSOM       | Power    | Main power for board 3.45V - 4.5V    |         | VSOM         |          |
+| 39  | VSOM       | Power    | Main power for board 3.5V - 4.5V     |         | VSOM         |          |
 | 38  | reserved   | LVDS     | LVDS D3+                             |         | P1.56        |          |
 | 37  | reserved   | LVDS     | LVDS D3-                             |         | P1.58        |          |
-| 36  | VSOM       | Power    | Main power for board 3.45V - 4.5V    |         | VSOM         |          |
+| 36  | VSOM       | Power    | Main power for board 3.5V - 4.5V     |         | VSOM         |          |
 | 35  |            |          |                                      |         |              |          |
 | 34  |            |          |                                      |         |              |          |
 | 33  | GND        | Power    | Ground                               |         |              |          |
@@ -83,21 +83,21 @@ Other side
 | 29  |            |          |                                      |         |              |          |
 | 28  |            |          |                                      |         |              |          |
 | 27  |            |          |                                      |         |              |          |
-| 26  | VSOM       | Power    | Main power for board 3.45V - 4.5V    |         | VSOM         |          |
+| 26  | VSOM       | Power    | Main power for board 3.5V - 4.5V     |         | VSOM         |          |
 
 Could also take in HDMI or PCIe lanes instead of LVDS
 
 
 #### Connector 2 PD controller, close to power connectors
 
-- 2 * VSOM, 3 * GND, 1 * VCC_RTC, 1 * VIN_3V3
-- 1 * VSOM, 1 * GND, 2 * VIN_5V
+- 2 * VSOM, 3 * GND, 1 * VCC_RTC, 2 * 3V3
+- 1 * VSOM, 1 * GND, 1 * 5V
 
 One side
 
 | Pin | Code         | Type     | Details                              | Voltage | to Baseboard | Misc         |
 |-----|--------------|----------|--------------------------------------|---------|--------------|--------------|
-| 1   | VSOM         | Power    | Main power for board 3.45V - 4.5V    |         | VSOM         | Conn. detect |
+| 1   | VSOM         | Power    | Main power for board 3.5V - 4.5V     |         | VSOM         | Conn. detect |
 | 2   | GND          | Power    | Ground                               |         |              |
 | 3   | USB1_DP      | USB      | USB1 D+                              |         | P1.12        |
 | 4   | USB1_DN      | USB      | USB1 D-                              |         | P1.14        |
@@ -107,11 +107,11 @@ One side
 | 8   | GND          | Power    | Ground                               |         |              |
 | 9   | USB1_SBU1    | OTG      | Spare pins                           |         |              |
 | 10  | USB1_SBU2    | OTG      | Spare pins                           |         |              |
-| 11  | GND          | Power    | Ground                               | 3V3        |   |
-| 12  |SYS_PD_CTL_INT| IRQ      | PD Controller triggers INT as SYS slave |         | P20.20 P2.67 EX:P1.3 EX0.2 |             |
+| 11  | GND          | Power    | Ground                               |         |              |
+| 12  |SYS_PD_CTL_INT| IRQ      | PD Controller trigs INT as SYS slave |         | P20.20 P2.67 EX:P1.3 EX0.2 |             |
 | 13  | SYS I2C SCL  | I2C      |                                      |         | P21.7        | GP15 I2C1.  |
 | 14  | SYS I2C SDA  | I2C      |                                      |         | P21.5        | GP14 I2C1.  |
-| 15  | VSOM         | Power    | Main power for board 3.45V - 4.5V, if mechanical lock shorted    |         | VSOM | Mech. lock |
+| 15  | VSOM         | Power    | Main power for board 3.5V - 4.5V     |         | VSOM | Mech. lock |
 | 16  | USB_XD_OE    | Alt USB2 | USB 2.0 bus switch                   |         | P1.2   | P10.9   |
 | 17  | USB_XD_SEL   | Alt USB2 | USB 2.0 bus switch                   |    | P2.66   | P10.7 |
 | 18  | PMIC_ON_REQ  | Reset    | PMIC ON input from Application processor. When high, the device starts power on sequence. |   | P1.68   | P10.5   |
@@ -127,19 +127,19 @@ Other side
 
 | Pin | Code       | Type     | Details                              | Voltage    | to Baseboard |  Misc   | mcu pin |
 |-----|------------|----------|--------------------------------------|------------|--------------|---------|---------|
-| 50  |
-| 49  | VCC_RTC    | Power    | Low power mode supply                |         | P1.93         |           |
+| 50  |            |          |                                      |            |              |         |
+| 49  | VCC_RTC    | Power    | Low power mode supply                | 3.3V       | P1.93        |           |
 | 48  | USB1_XDP   | USB 2.0  |  OTG plug alt USB 2.0                |            |              | 
 | 47  | USB1_XDN   | USB 2.0  | OTG plug alt USB 2.0                 |            |          |  
-| 46  | 5V         | Power    | To drive LED matrix and HDMI         |            |          |  
+| 46  | 5V         | Power    | To drive LED matrix and HDMI         | 5V           |          |  
 | 45  | USB2_XDP   | USB 2.0  | Host plug alt USB 2.0                |            |          |  
 | 44  | USB2_XDN   | USB 2.0  | Host plug alt USB 2.0                |            |          |  
-| 43  | 3V3        | Low power| From battery (low power mode)        | 3.3V       |          |  
-| 42  |         |        |                            |            |          |  
-| 41  |    |       |                           |            |          |  
-| 40  | 3V3        | Low power| From battery (low power mode)        | 3.3V       |              |    |
+| 43  | 3V3        | Power    | Live from VSOM                       | 3.3V       |          |  
+| 42  |            |          |                                      |            |          |  
+| 41  |            |          |                                      |            |          |  
+| 40  | 3V3        | Power    | Live from VSOM                       | 3.3V       |              |    |
 | 39  | PD_HRESET  | PD       | PD Controller HRESET (High)          |            |              |         |
-| 38  |            | I2C      |           |            |              |    |
+| 38  |            | I2C      |                                      |            |              |    |
 | 37  | POWER_PD_CTL_INT| I2C | Interrupt from slaves                |            |              |    |
 | 36  | POWER SCL  | I2C      | Power SCL                             |            |         |     |     |
 | 35  | POWER SDA  | I2C      | Power SDA                             |            |         |     |     |
@@ -150,7 +150,7 @@ Other side
 | 30  | SPI_MOSI   | PD       | Flash SPI                               | 3.3V       |              |         |   |
 | 29  | BAT_LDO    | Power    | Charger LDO for status               | 3.3V 50 mA |              |         |    |
 | 28  | LOCK_BTN   | Power    | Signal                               |            |              |         |     |
-| 27  | SHUTDOWN_BTN| Power   | Signal                               |            |              |         |     |
-| 26  | VSOM       | Power    | Main power for board 3.45V - 4.5V    |            | VSOM         |  Conn. detect |     |
+| 27  |SHUTDOWN_BTN| Power    | Signal                               |            |              |         |     |
+| 26  | VSOM       | Power    | Main power for board 3.5V - 4.5V     |            | VSOM         |  Conn. detect |     |
 
 
