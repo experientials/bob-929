@@ -84,12 +84,35 @@ Review
 - PP_CABLE: see the requirements for Sink/Source. Can external paths be reduced from the reference schema? Assuming a different config is uploaded to TPS65988
 - What is OTG 2.0 fault for? Signals can be connected to TSP65988. One line is already connected to GPIO3, another could be to GPIO0. The two USB connectors have dedicated roles of acting as a device and a host. Is it only relevant for one of them?
 - Connecting the two D+ and D- pins together is meant to be done with a USB 2.0 switch to allow passing two lines per connector.
+- Can some components such as regulators be picked from LCSC.com inventory?
+- Should TPS GPIO 12/13 be mapped to SWD? Can it coexist with BAT EN / LOCK BTN?
+- Are GPIO16/17 needed for PP_EXT?
+- Pull resistor on BAT_EN that enables charger by default
 
 
 Refs
 
 - [i.MX8M processor pins pull-up /down configuration](https://community.nxp.com/t5/i-MX-Processors/i-MX8M-processor-pins-pull-up-down-configuration/m-p/882223)
 - [I2C Bus Pullup Resistor Calculation](https://www.ti.com/lit/an/slva689/slva689.pdf)
+
+
+### Battery choice
+
+The supported options for batteries are:
+
+- [XINJ 3494105 - 4000 mAh](https://www.aliexpress.com/item/32799321214.html)
+- [EHAO 125054 - 4000 mAh](https://www.aliexpress.com/item/32923179842.html)
+- Dual NCR18650B - 6800 mAh
+- [Bihuade 126090 - 8000 mAh](https://www.aliexpress.com/item/32989341301.html)
+- [Bihuade SD 4285104 - 5000 mAh](https://www.aliexpress.com/item/32838021002.html)
+- [Bihuade Liter 3248147 - 3500 mAh](https://www.aliexpress.com/item/32840667993.html)
+
+
+The 3494105, 3248147, and 4285104 have embedded temperature sensors. Requesting the types...
+
+
+
+
 
 
 ### I2C Bus
@@ -116,6 +139,34 @@ Chips on the Power I2C bus
 - TUSB546 ?
 
 USB-C state change interrupt?
+
+## Firmware
+
+
+### TPS65988 configuration
+
+Using the [TPS6598X-CONFIG](https://www.ti.com/product/TPS65988?keyMatch=TPS65988&tisearch=search-everything&usecase=GPN#software-development) a new project is created with:
+
+Port 1 (USB1 OTG):
+
+- Upstream facing
+- USB3 gen2 rate
+- Over voltage trip point 10.24 V
+- I2C3 Enable as Master
+
+
+Port 2 (USB2 Host):
+
+- Dual role DRP
+- Fully featured USB-C
+- USB3 gen2 rate
+- Over voltage trip point 10.24 V
+- I2C3 Enable as Master
+
+Other
+
+- GPIO 5/6 as I2C3
+- 
 
 
 ## Device Tree

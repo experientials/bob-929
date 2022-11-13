@@ -123,6 +123,9 @@ One side
 | 24  | BAT_CE#      | Charger  | Charge Enable Active-Low. Connect CE to a high logic level to place the battery charger in standby mode.  |      |    |
 | 25  | BAT_EN       | Charger  | Enable battery charger output        |         |    |
 
+Beware that the max draw on BAT_STAT is minimal.
+
+
 Other side
 
 | Pin | Code       | Type     | Details                              | Voltage    | to Baseboard |  Misc   | mcu pin |

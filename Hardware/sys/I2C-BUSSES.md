@@ -1,6 +1,7 @@
 ### PD Controller I2C
 
-The TPS PD Controller can be accessed and master various I2C busses. I2C1 connects to STEM as slave or master.
+The TPS PD Controller can be accessed and master various I2C busses. 
+I2C1 connects to STEM as slave or master.
 I2C2 is a slave on SYS, allowing an API to be exposed to the i.MX8 CPU. 
 I2C3 is on the POWER I2C bus, so it can master the other chips on the T-USB power board.
 The PD Controller firmware can be patched over I2C,
