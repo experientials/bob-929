@@ -133,3 +133,7 @@ dmypy.json
 \#auto_saved_files\#
 fp-info-cache
 *-backups
+
+
+# NodeJS
+node_modules

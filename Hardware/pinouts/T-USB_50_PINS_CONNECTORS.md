@@ -45,7 +45,7 @@ One side
 | 16  | GND              | Power    | Ground                               |         |              |          |
 | 17  | STEM SCL         | I2C      | STEM SCL                             |         | P1.94        | GP21 I2C0   |
 | 18  | STEM SDA         | I2C      | STEM SDA                             |         | P1.96        | GP20 I2C0   |
-| 19  | STEM INT         | I2C      | Sensor interrupts                    |         | P1.98        |          |
+| 19  | STEM MSG         | I2C      | 1-Wire messaging                     |         | P1.98        |          |
 | 20  | GND              | Power    | Ground                               |         |              |          |
 | 21  |                  |          |                                      |         |              |          |
 | 22  |                  |          |                                      |         |              |             | 

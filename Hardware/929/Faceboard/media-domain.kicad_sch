@@ -1369,7 +1369,7 @@
     (effects (font (size 1.27 1.27)) (justify right))
     (uuid 60ba8374-1d17-4d15-8615-877635ff0521)
   )
-  (hierarchical_label "STEM_INT" (shape input) (at 238.76 186.69 0)
+  (hierarchical_label "STEM_MSG" (shape input) (at 238.76 186.69 0)
     (effects (font (size 1.27 1.27)) (justify left))
     (uuid 64d693fb-b4e1-440a-b090-c0a4f4c226b6)
   )

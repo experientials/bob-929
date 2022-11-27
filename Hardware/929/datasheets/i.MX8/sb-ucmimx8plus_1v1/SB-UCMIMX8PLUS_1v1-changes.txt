@@ -1,0 +1,26 @@
+SB-UCM-iMX8PLUS Revision 1.1
+
+a. 02. Carrier-board interface page:
+	1. Disabled POR_B provision (E5, R194 - DNP)
+	
+b. 04. USB3.0, Type-C, Host page:
+	1. Disable USB2 VBUS detection (R326, R895 - DNP)
+	2. Disable fault indication to power switch (R894 - DNP)
+	3. Remove USB2 serial download provision connector (L26, P24 - DNP)
+	4. Added dedicated USB2.0 Mux for HS-USB signals of USB2 interface (added U36, R915, C176, R241)
+		
+c. 08. LVDS LCD page:
+	1. Swap LVDS0_CLKP/LVDS0_CLKN on L13 (incorrect clock differential polarity)
+	
+d. 09. HDMI, eARC page:
+	1. Replace HDMI filter capacitors with 0R resistors: (remove: C355, C349, C348, C350, C352, C353, C356, C357; assemble: R344-R353)
+			
+e. 10. MIPI-CSI1 Connectors:
+
+	1. Bypass MIPI-CSI1 Mux (U63) for I2C5 bus on both connectors: (added R354, R355, R356, R358)
+	2. Replace P49 connector by upside contact variant (182P02201S)
+
+f. 11. MIPI-CSI2 Connectors:
+	1. Swap CSI2_P1_I2C_SDA/CSI2_P1_I2C_SCL on P47 (incorrect pin-out)
+	2. Bypass MIPI-CSI2 Mux (U64) for I2C6 bus on both connectors (added R326, R359, R298, R300)
+	

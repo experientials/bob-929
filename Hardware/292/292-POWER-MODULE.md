@@ -153,6 +153,7 @@ Port 1 (USB1 OTG):
 - USB3 gen2 rate
 - Over voltage trip point 10.24 V
 - I2C3 Enable as Master
+- VCONN not supported / disabled
 
 
 Port 2 (USB2 Host):
@@ -187,7 +188,7 @@ Linux kernel support
 
 #### TPS65988
 
-Interrupt pin = SYS_EX_nINT
+Interrupt pin = SYS_EX_nINT / PD_USBC_INT
 
 ```
     i2c0 {
