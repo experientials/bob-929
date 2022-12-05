@@ -9,6 +9,13 @@ development board.
 The work should end in a delivery of populated boards and a pull request against the GitHub repository with the existing
 KiCad designs and documentation.
 
+Milestones
+
+1. Review and correct schema $200
+2. Review and correct PCB $400
+3. Produce initial batch of assembled boards $300
+
+
 ## The 929 Board
 
 ![Bob face](../../Face/929%20bob%20front%20straight.png)
