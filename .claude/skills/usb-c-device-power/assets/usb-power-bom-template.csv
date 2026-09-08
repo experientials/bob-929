@@ -1,0 +1,26 @@
+RefDes,Qty,Block,Function,Value,MPN,Manufacturer,Package,LCSC,BasicExt,UnitUSD,ExtUSD,AltMPN,DNP,Notes
+J1,1,Receptacle,USB-C sink/OTG port,,USB-C-16P,,USB-C 16P SMT,,Basic,0.18,0.18,,,route D+/- to i.MX8 USB2
+U1,1,Protection,Short-to-VBUS + IEC ESD,,TPD6S300ARUKR,TI,QFN-16,,Extended,0.80,0.80,,,between connector and CC/SBU
+U2,1,CC mgmt,Type-C DRP + orientation (no PD),,HD3SS3220IRNHR,TI,WQFN-12,,Extended,0.70,0.70,,,mainline hd3ss3220.c; kernel sees port
+R1,1,CC mgmt,CC1 dead-battery Rd,5.1k,,,0402,,Basic,0.003,0.003,,,one per CC pin - never shared
+R2,1,CC mgmt,CC2 dead-battery Rd,5.1k,,,0402,,Basic,0.003,0.003,,,one per CC pin - never shared
+U3,1,Charger,1S power-path charger,,BQ24250RGER,TI,QFN-24,,Extended,1.80,1.80,BQ25601DRVR,,ISET resistor MUST be connected
+L1,1,Charger,Buck inductor,1uH,,,0806,,Basic,0.10,0.10,,,Isat >= ICHG; low DCR for toy thermal
+R3,1,Charger,RISET charge-current set,,,,0402,,Basic,0.01,0.01,,,ICHG = 250 / RISET
+R4,1,Charger,RILIM input-limit set,,,,0402,,Basic,0.01,0.01,,,
+RT1,1,Charger,NTC thermistor (JEITA),10k,103AT-2,,0402,,Basic,0.10,0.10,,,use pack embedded NTC if present
+C1,1,Charger,CIN VBUS input,2.2uF,,,0402,,Basic,0.02,0.02,,,
+C2,1,Charger,CPMID,1uF,,,0402,,Basic,0.02,0.02,,,
+C3,1,Charger,CSYS system,10uF,,,0603,,Basic,0.03,0.03,,,
+C4,1,Charger,CBAT battery,10uF,,,0603,,Basic,0.03,0.03,,,
+C5,1,Charger,CBOOT,33nF,,,0402,,Basic,0.01,0.01,,,
+U4,1,Data mux,USB2 orientation mux,,TS5USBC410IYFFR,TI,DSBGA,,Extended,0.40,0.40,TS3USB221,,SEL from CC logic; 20V tolerant
+C6,2,VSOM,System bulk,22uF,,,0805,,Basic,0.05,0.10,,,size for peak (battery-supplement)
+U5,1,Gauge,Fuel gauge (optional),,MAX17048G+,ADI,uDFN,,Extended,1.10,1.10,BQ27441,,skip if charger ADC is enough
+R5,2,Supervisor,I2C pull-ups,4.7k,,,0402,,Basic,0.003,0.006,,,per bus; compute per slva689
+D1,1,Supervisor,STAT LED,,,,0603,,Basic,0.02,0.02,,,modest brightness for toy
+R6,1,Supervisor,STAT LED resistor,1k,,,0402,,Basic,0.003,0.003,,,
+J2,1,Battery conn,Keyed battery connector,,SM02B-SRSS-TB,JST,SH 2P,,Basic,0.10,0.10,,,keyed so pack can't reverse
+U6,1,CC mgmt,PD controller (Alt-Mode variant),,CYPD6227-96BZXI,Infineon,QFN,,Extended,2.00,2.00,,Y,DNP: only DisplayPort variant
+U7,1,Data mux,DP1.4 redriver/crosspoint (Alt-Mode),,TUSB546IRNQR,TI,QFN-40,,Extended,1.50,1.50,,Y,DNP: routes to i.MX8 USB1 SS lanes
+U8,1,CC mgmt,TCPC for kernel-managed PD (optional),,PTN5110NHQZ,NXP,QFN,,Extended,1.00,1.00,,Y,DNP: add if OS should manage PD

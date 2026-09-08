@@ -3,6 +3,10 @@
 The 929 is a baseboard a.k.a. Faceboard for joining submodules for Smart Cameras, m.2 Supervisor, 
 Power Delivery and System Module. It is largely derived from the [UCM i.MX8 reference board](./datasheets/i.MX8/sb-ucmimx8plus_1v1/sb-ucmimx8plus_1v1.pdf).
 
+> **Module selection (deferred):** switching from the UCM to the smaller/cheaper MCM-iMX8M-Plus
+> requires a pin-by-pin comparison against this 2022 UCM design — see
+> [MCM-PINOUT-COMPARISON-TASK.md](./MCM-PINOUT-COMPARISON-TASK.md).
+
 
 :[BOM](./929-BOM.md)
 
