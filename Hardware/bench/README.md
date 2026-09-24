@@ -23,6 +23,7 @@ physical/practical bench-lab setup, CI hardware, and tech demos.
 | [`bench-v2.md`](bench-v2.md) | **bench-V2** — the hardware-modified bench (camera, U10 rework, more breakouts) + the RPi CI-lab supervisor. |
 | [`spikes.md`](spikes.md) | **Bench validation spikes** (pinmux model → silicon): SPIKE-1 (WM8731/ADCDAT), SPIKE-2 (analog mic array), etc. |
 | [`BOM.md`](BOM.md) | **Bill of materials** — per-bench parts (boards, shifters, amp, probe, mounting), have/need + phase, derived from the wiring plan. |
+| [`bench-layout.md`](bench-layout.md) | **Physical layout & mounting** — the 2× acrylic blow-up, what's mounted where, interconnect (IDC ribbon off P20/P21), power (USB-PD + battery), RPi decision. |
 
 ## Cross-repo layout (sibling checkouts under `…/Talki/`)
 

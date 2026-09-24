@@ -42,6 +42,27 @@ Pico4ML (RP2040 + cam/mic — camera is a V2 topic) · BBC micro:bit **V1.3 (nRF
 capability/phase table and the pin-allocation plan below are DERIVATIONS of this list — this block is
 the source of truth; if they disagree, this wins.*
 
+### Pending objective — NOT yet in the verbatim list (do not lose)
+
+**Product power-path validation** (USB-PD + single-cell battery + power-management chipset) **IS a
+bench objective** (Henrik, 2026-09-21). It was **deliberately left out of the canonical list above
+because the power chipset selection is still being revised** — so its exact scope/wording is not yet
+fixed. Capture the objective **verbatim into the canonical block once the chipsets are settled**; until
+then, treat it as intended-but-unspecified. Physical/power notes so far live in
+[`bench-layout.md`](bench-layout.md); the product power tree is `ziloo/Hardware/Power` (chipsets TBD —
+don't assume the current MAX77860/MAX77301 selection).
+
+### Candidate bench-eval — NOT in the verbatim list (parent-tap NFC config)
+
+**Parent-tap phone→toy config channel** (toy-as-**passive NFC tag**; iPhone writes over RF, the MCU reads
+over I²C, field-detect wakes the supervisor) is a **candidate bench eval + product feature** raised
+2026-09-21. It fits V1 unmodified — a **dual-interface NFC-I²C tag** on **I²C3** + one GPIO for FD/GPO wake
+(see [`bench-v1-wiring.md`](bench-v1-wiring.md), [`BOM.md`](BOM.md)). **Not folded into the canonical block**
+— flag for Henrik to add verbatim if it becomes a tracked objective. Product intent:
+`bob-929/Hardware/nfc-parent-config.md`; product NFC choice: `talkihw/Testy Module/NFC.md`. **Reg upside:** a
+*passive* tag is generally **out of RED radio scope** (phone is the transmitter) — grounded, but the
+dual-interface boundary needs a Notified Body to confirm.
+
 ## Phasing — M7 bring-up is a PARALLEL track, not a gate
 
 The hardware-config spikes (attach breakouts, mux buses, wire audio) do **not** depend on the M7.

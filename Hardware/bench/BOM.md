@@ -13,7 +13,7 @@ Representative SKUs — verify current part numbers before ordering.
 |---|---|---|---|---|
 | CompuLab UCM-iMX8M-Plus SoM | 1 | the compute module under test | ✅ | non-'E' variant |
 | SB-UCM carrier board | 1 | breaks out P20/P21/P10/P7, J3/J5, JTAG | ✅ | CompuLab eval carrier |
-| 12 V PSU (barrel jack) | 1 | board power (all bench scenarios) | 🛒/✅ | VDC_IN ≤16 V; ≥3 A |
+| **12 V / 5 A PSU** (barrel jack) | 1 | **bench operating power** — powers the whole bench (SoM + dev boards + hub); board regulates normally | 🛒/✅ | VDC_IN 10–16 V, jack rated 10 A. Never 12 V to V_SOM |
 
 ## MCU dev boards (I²C/SPI peers + radio)
 
@@ -52,6 +52,15 @@ Representative SKUs — verify current part numbers before ordering.
 | SSD1306 OLED (I²C) | 1 | status display, MSP430-driven (obj 12,13) | ✅ | on MSP430's own I²C (off-carrier) |
 | Dev-kit MIPI/LVDS display (SoM kit) | 1 | status display via FPC (obj 12) | ✅ | on the FPC connectors |
 
+## NFC (bench evaluation — recognize tagged objects)
+
+| Item | Qty | Role | Status | Notes |
+|---|---|---|---|---|
+| **MFRC522 (RC522) module** | 1 | 13.56 MHz RFID **reader** (ISO14443A/MIFARE **UID**) — the cheap UID-reader option | 🛒 | **3.3 V, SPI** (~$1–2; NOT 5 V-tolerant). Wire per `bench-v1-wiring.md` (Pico-direct or SoM ECSPI2) |
+| **NFC 7 Click** (PN7160, I²C) | 1 | full NCI controller eval (reader + card-emul/HCE) — the no-firmware NCI path | 🛒 | ~$37 dev board; **3.3 V I²C → P21 I²C5/6 (no shifter)** + IRQ + VEN |
+| NFC tags (NTAG21x / MIFARE, + an NTAG 424 DNA) | few | test tags for object-ID / authentication | 🛒 | for the mouth-recognition trials — see `talkihw/Testy Module/NFC.md` |
+| **Dual-interface NFC-I²C tag** (NTAG I²C plus **or** ST25DV) | 1–2 | **parent-tap phone→toy config** eval — toy-as-**passive-tag**: iPhone writes over RF, MCU reads over I²C, FD/GPO wakes MCU | 🛒 | **3.3 V I²C → I²C3** (shifter) + 1 GPIO (FD/GPO wake) + antenna coil. Energy-harvesting; the **radio-free** config path. See `bench-v1-wiring.md`, `talkihw/Testy Module/NFC.md` |
+
 ## USB, power, networking
 
 | Item | Qty | Role | Status | Notes |
@@ -77,13 +86,19 @@ Representative SKUs — verify current part numbers before ordering.
 | Pull-up resistors 2.2–4.7 kΩ | few | I²C pull-ups each side of the shifter | 🛒 |
 | Bulk/decoupling caps | few | rails, amp VIN | 🛒 |
 
-## Physical bench ("Big Bob Bench" — boards mounted on the back)
+## Physical bench ("Big Bob Bench" — 2× acrylic blow-up, boards mounted) — see `bench-layout.md`
 
 | Item | Qty | Role | Status |
 |---|---|---|---|
-| Mounting panel / back plate | 1 | mount carrier + dev boards on the back | 🛒 |
+| **2× acrylic blow-up panel** (Bob form factor) | 1 | the mounting substrate | ✅ |
+| **USB-PD power board** (e.g. dymecx 5 V/3 A) | 1 | product-representative power (PD charge) | ✅/🛒 |
+| **Single-cell battery** (LiPo) | 1 | product-representative power; feeds V_SOM (confirm feed point) | 🛒 |
+| Powered USB hub | 1 | SoM USB-host → MCU dev boards (also in USB row above) | ✅/🛒 |
 | Standoffs, M2.5/M3 screws, spacers | sets | board mounting | 🛒 |
+| IDC 2×17 ribbon + jumper wires | sets | interconnect off P20/P21 | ✅/🛒 |
 | Cable management / labels | — | tidy the USB + signal harness | 🛒 |
+
+*RPi supervisor is **V2** (dropped from the V1 bench — SoM self-hosts USB; see shared/lab-level + `bench-layout.md`).*
 
 ## Shared / lab-level (V2 CI lab)
 

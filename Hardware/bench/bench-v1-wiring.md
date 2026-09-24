@@ -100,6 +100,35 @@ pin.)*
   ↔ the nRF board's chosen GPIO. nRESET = nRF **P0.18**; SPI/IRQ nRF pins = firmware-assigned (PSEL).
 - Shifter V_CCA = 1.8 V (P10.2), V_CCB = 3.3 V, OE→V_CCA. *(Bare 1.8 V module rejected — see D2.)*
 
+### MFRC522 (RFID UID reader) — bench eval, 3.3 V SPI
+
+The cheap UID-reader option (ISO14443A/MIFARE) next to the PN7160/NFC 7 Click. **3.3 V, SPI, NOT 5 V.**
+Two wiring options — pick by goal:
+
+- **(A) Fastest eval — off a Pico (RP2040), 3.3 V-native, NO shifter.** MFRC522 SCK/MOSI/MISO/SS → the
+  Pico's SPI0 (+ a GP for **SS**), **RST**→a Pico GP, **IRQ**→a Pico GP (or omit and poll), 3V3+GND from
+  the Pico. The Pico reads the UID (ubiquitous MFRC522 libs) and **reports it to the SoM over I²C3** —
+  the translation-expander pattern. Zero carrier-header / shifter cost. **Recommended for first read.**
+- **(B) Product-representative — on the i.MX8 ECSPI2, sharing the nRF's TXB0108 bus.** Both MFRC522 and
+  the nRF are 3.3 V SPI → they share the ECSPI2 bus on the shifter's 3.3 V side, each with its own CS:
+  MFRC522 **SCLK←P21.26, MOSI←P21.28, MISO→P21.22** (shared); **CS = a dedicated GPIO** (ECSPI2_SS0 is the
+  nRF's → use a GPIO chip-select, `cs-gpios` in DT); **RST + IRQ = free GPIO** (pull from P20 spares — P21
+  is tight); 3V3 (P20.7) + GND. Linux **spidev** + an MFRC522 userspace lib reads the UID → matches
+  "NFC on the SoM". Product part-choice context: `talkihw/Testy Module/NFC.md`.
+
+### Dual-interface NFC-I²C tag (NTAG I²C plus / ST25DV) — parent-tap config channel, 3.3 V I²C
+
+Toy-as-**passive-tag** eval: an iPhone (Core NFC) **writes** a mode/config command over RF; the SoM (or an
+MCU) **reads** it over I²C3 and applies it. **No transmitter on the bench side — the phone is the radio.**
+
+- **I²C:** SDA/SCL → **I²C3** (P20.34/.33) via the 1.8↔3.3 V I²C shifter (tag is 3.3 V); its own I²C addr
+  (NTAG I²C plus **0x55**; ST25DV user **0x53** / sys **0x57** — confirm; watch collisions on the shared bus).
+- **Field-detect wake:** tag **FD** (NTAG) / **GPO** (ST25DV) → a **free P20 GPIO** (IRQ-style) to wake the
+  supervisor/SoM on tap. **Energy-harvesting** → the RF side works even with the bench powered down.
+- 3V3 (P20.7) + GND. Needs an **NFC antenna coil** on the tag. Eval both: static memory write vs ST25DV
+  **mailbox** (fast bidirectional). Product/reg context: `talkihw/Testy Module/NFC.md`; product-support
+  intent: `bob-929/Hardware/nfc-parent-config.md`.
+
 ### MAX98357A (speaker amp) — SAI3-TX
 - VIN **3V3 (P20.7)** (or 5V P20.6), GND **P21.6/.9**
 - DIN←**P21.11**, BCLK←**P21.13**, LRC←**P21.21**; SD_MODE/GAIN strapped per datasheet; speaker on out

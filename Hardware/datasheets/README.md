@@ -14,6 +14,7 @@ datasheets: `.claude/skills/ucm-dev/references/datasheets.md`.
 | Xtrinsic MAG3110 Three-Axis, Digital Magnetometer - Data sheet | [`MAG3110.pdf`](MAG3110.pdf) | mag3110 |
 | BSS138 | [`bss138.pdf`](bss138.pdf) | bss138, mosfet, i2c, level-shifter, diodes |
 | max98357a | [`max98357a.pdf`](max98357a.pdf) | max98357a, i2s, class-d, speaker, amplifier, audio, analog-devices |
+| mfrc522 | [`mfrc522.pdf`](mfrc522.pdf) | mfrc522, rc522, rfid, nfc, reader, 13.56mhz, spi, iso14443a, mifare, nxp, module-spec-9pp |
 | micro bit Schematics | [`micro-bit Schematics.pdf`](<micro-bit Schematics.pdf>) | micro, bit, schematics |
 | MSP430™ Flash Devices Bootloader (BSL) User's Guide (Rev. AE) | [`msp430-bsl-slau319ae.pdf`](msp430-bsl-slau319ae.pdf) | msp430, bsl, bootloader, programming, slau319, ti |
 | MSP430x2xx Family User's Guide (Rev. J) | [`msp430-family-ug-slau144j.pdf`](msp430-family-ug-slau144j.pdf) | msp430, family, user-guide, slau144, ti |
@@ -36,6 +37,11 @@ datasheets: `.claude/skills/ucm-dev/references/datasheets.md`.
 
 ## Still to fetch (vendor bot-wall / needs browser)
 
+- **MFRC522 full IC datasheet** (~95 pp) — the library has only the **brief RC522 module spec** (9 pp,
+  pinout — enough for bench wiring). Full NXP IC datasheet is browser-only (bot-wall):
+  https://www.nxp.com/docs/en/data-sheet/MFRC522.pdf → replace/augment `mfrc522.pdf`.
+- **PN7160 datasheet** (NXP NFC controller — NFC 7 Click) → save as `pn7160.pdf`. Browser-only (bot-wall):
+  https://www.nxp.com/docs/en/data-sheet/PN7160.pdf
 - **nRF52840 chip** (silicon in the Seeed XIAO **and** the dongle) → save as `nrf52840_ps.pdf`. Browser:
   - Docs: https://docs.nordicsemi.com/bundle/ps_nrf52840/page/keyfeatures_html5.html
   - Direct PDF: https://docs-be.nordicsemi.com/bundle/ps_nrf52840/attach/nRF52840_PS_v1.8.pdf
