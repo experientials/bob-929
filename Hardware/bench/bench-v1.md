@@ -42,6 +42,66 @@ Pico4ML (RP2040 + cam/mic — camera is a V2 topic) · BBC micro:bit **V1.3 (nRF
 capability/phase table and the pin-allocation plan below are DERIVATIONS of this list — this block is
 the source of truth; if they disagree, this wins.*
 
+### Canonical stem MCU — MSP430FR2355 (Henrik, 2026-09-24, verbatim)
+
+> I now have 5x FR2355 dev boards. It seems to be the best fit as a part of the stem that sits near
+> SoM and monitors sensors to wake up the SoM. So it will be the canonical target, with 2476, 2433
+> being also ran.
+
+*Derived rationale + hard constraint (verified against TI datasheets — cite, don't recall):* the stem's
+**dual-I²C** requirement (Signal sensor bus + Stem SoM bus — Henrik's 2026-09-24 priority: 2× I²C
+**required**) needs **two eUSCI_B** modules. **FR2433 has only one eUSCI_B → one I²C, so it is
+physically disqualified for the dual-bus stem** ([FR2433 ds](https://www.ti.com/lit/ds/symlink/msp430fr2433.pdf)).
+**FR2476 has B0+B1 (two I²C)** so it is capable — it is an also-ran by preference, not incapacity
+([FR2476 ds](https://www.ti.com/lit/ds/symlink/msp430fr2476.pdf)). **FR2355 has B0+B1 (two I²C)** plus
+DACs/OPAs; 5 on hand ([FR2355 ds](https://www.ti.com/lit/ds/symlink/msp430fr2355.pdf)). Serial budget
+on FR2355: 4 eUSCI — B0/B1 = the two I²C, A0/A1 = UART + SPI; **programming is Spy-Bi-Wire (RST+TEST),
+0 eUSCI**. So the full priority stack fits: 2× I²C (req) · programming (req, SBW) · SPI (nice) · UART
+(nice) · GPIO (req, count ~6–12 from interrupts + SPI CS + wake/handshake + resets + LEDs). Bring-up
+detail: `.claude/skills/tinker-sensor-boards/references/bench-bringup.md`.
+
+**RESOLVED (Henrik, 2026-09-25):**
+- **FR2355 is the BENCH target**, not the product silicon. The **product variant candidate is
+  FR2155** (32 KB program FRAM, same A0/A1/B0/B1 → dual-I²C, 44 I/O — but the FR21xx line has **no
+  smart-analog-combo** DAC/OPA, unlike FR235x; [FR2155 ds](https://www.ti.com/lit/ds/symlink/msp430fr2155.pdf)).
+  So bench dev on FR2355's DAC/OPA must not become a product dependency if product is FR2155.
+- **FR2433's single-I²C attached-expander role STAYS relevant** (Henrik: "still relevant") — it was
+  only *supervisor* ranking that demoted 2476/2433. The FR2433 15.5 KB product size gate
+  (`size-check.sh`) remains live for that expander line.
+- **Dual-I²C role semantics:** one I²C is **master-or-slave** (Signal/sensor bus — masters sensors
+  when SoM asleep), the other **slave-only** (Stem bus to SoM). This is a *firmware* role split; in
+  hardware both eUSCI_B do master or slave equally, so it's freely assignable.
+
+**FR2355 serial + GPIO budget (bench).** 4 eUSCI: **B0/B1 = the two I²C · A0/A1 = UART + SPI**;
+programming = SBW (RST+TEST), 0 eUSCI. So **2×I²C + 1×SPI + 1×UART exactly fills all four eUSCI — a
+SECOND hardware UART does not fit** (drop SPI, or bit-bang a timer UART on GPIO). Chip = **44 I/O**
+([FR2355 ds](https://www.ti.com/lit/ds/symlink/msp430fr2355.pdf)); after ~9 serial pins (+ optional
+2-pin 32 kHz wake xtal), **~33–35 GPIO free at the chip**. On the **LaunchPad the binding limit is
+the BoosterPack headers** (~30 header I/O, some shared with LEDs/button/backchannel) → **~20 usable
+GPIO on the headers** after the serial buses — above the ~6–12 the stem role needs (sensor INTs + SPI
+CS + wake/handshake + LEDs). **Exact J1–J4 header pin map still TODO** (needs SLAU680 + Grove Base
+BoosterPack map; the SLAU680 pinout PDF is image-only — do not fabricate pin numbers).
+
+### DECISION RECORD — FR2355 stem pin allocation (Henrik, 2026-09-25)
+
+*Status: accepted; direction firm ("pretty certain it's the direction"). Grounded in the 4-eUSCI
+budget above. This is the allocation the bench-V1 FR2355 wiring derives from.*
+
+| Function | Resource | Status | Notes |
+|---|---|---|---|
+| **2× I²C** | eUSCI_B0 + B1 | **DEFINED** | Signal bus = **master-or-slave**; Stem bus = **slave-only** to SoM (firmware roles; both B do either in HW) |
+| **1× UART — programming** | eUSCI_A0 | **DEFINED** | **BSL-over-UART**: UART TX/RX = data; **RST + TEST** = entry-sequence "knock" (not data). **SoM flashes the FR2355** (host root of trust — obj #9, `msp-fw-ota-host-root-of-trust`). BSL UART may share the app-UART pins — confirm vs FR2355 datasheet BSL pin table. |
+| **SPI** | eUSCI_A1 | **RESERVED — nothing firm** | held open for expansion; not allocated to a device yet |
+| **Rest → GPIO** | remaining I/O | **I/O-expander style** | sensor INTs · wake/handshake to SoM (obj 11/12) · SPI CS (if SPI used) · peripheral reset/OE · LEDs. ~20 usable on the LaunchPad headers |
+
+**Cost notes:** programming adds **0 application GPIO/eUSCI** — TEST and RST are dedicated pins (not
+general I/O) and the UART is the eUSCI_A0 already counted. **Level domain:** FR2355 is 3.3 V; the
+SoM UART4 is 1.8 V — so **all four programming lines (TX, RX, RST, TEST) cross 1.8↔3.3 V** and go
+through the level shifter, not just the UART pair. **SBW alternative:** RST+TEST double as the 2-wire
+SBW/JTAG (debug), so wiring them keeps a debug path open; the LaunchPad eZ-FET also gives SBW over USB
+on the bench. **TODO to make it buildable:** exact J1–J4 BoosterPack pins + whether BSL-UART == app-
+UART pins (needs SLAU680 + FR2355 datasheet BSL table).
+
 ### Pending objective — NOT yet in the verbatim list (do not lose)
 
 **Product power-path validation** (USB-PD + single-cell battery + power-management chipset) **IS a

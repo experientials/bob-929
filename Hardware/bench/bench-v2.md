@@ -19,7 +19,7 @@ It's where product audio, the mic array, camera, and the automated CI-lab come o
    pipeline. The device's actual purpose (`camera-connectors` skill).
 4. **RPi CI-lab supervisor** — a Raspberry Pi driving the bench over `thepia hwd` for **unattended
    HIL**: power control (hard-reset backstop — roadmap A4), the gated `bench-hardware` environment,
-   the `msp-fw/hil.yml`-style build+test gating (roadmap B3).
+   the `stem/hil.yml`-style build+test gating (roadmap B3).
 5. **More breakouts** — the mic-array module, speaker amp, camera, and product-representative sensors.
 
 ## Depends on
